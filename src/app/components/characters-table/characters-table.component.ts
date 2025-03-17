@@ -18,14 +18,38 @@ export class CharactersTableComponent {
   constructor(private api: RicknmortyapiService) { }
 
   ngOnInit(): void {
-
+    this.fetchNextPage();
   }
 
   fetchNextPage(): void {
-    throw new Error("Not implemented exception");
+    this.api.getNextPage().subscribe(
+      response => {
+        this.characters = response.results;
+        this.hasNextPage = response.hasNextPage;
+        this.hasPreviousPage = response.hasPreviousPage;
+      },
+      error => {
+        console.error('Error fetching next page:', error);
+      },
+      () => {
+        console.log('Next page fetch completed');
+      }
+    );
   }
 
   fetchPreviousPage(): void {
-    throw new Error("Not implemented exception");
+    this.api.getPreviousPage().subscribe(
+      response => {
+        this.characters = response.results;
+        this.hasNextPage = response.hasNextPage;
+        this.hasPreviousPage = response.hasPreviousPage;
+      },
+      error => {
+        console.error('Error fetching next page:', error);
+      },
+      () => {
+        console.log('Next page fetch completed');
+      }
+    );
   }
 }
